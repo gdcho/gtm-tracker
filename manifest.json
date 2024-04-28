@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "GTM Checker",
   "version": "1.0",
-  "description": "Check for Google Tag Manager and run scripts.",
+  "description": "Check for Google Tag Manager on the current page.",
   "permissions": ["activeTab", "scripting"],
   "background": {
     "service_worker": "background.js"
@@ -19,5 +19,13 @@
     "16": "icon.png",
     "48": "icon.png",
     "128": "icon.png"
-  }
+  },
+  "content_scripts": [
+    {
+      "world": "MAIN",
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"],
+      "run_at": "document_end"
+    }
+  ]
 }
