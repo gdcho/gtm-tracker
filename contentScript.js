@@ -1,15 +1,19 @@
-// contentScript.js
-document.addEventListener("DOMContentLoaded", function () {
-  if (document.querySelector('script[src*="googletagmanager.com"]')) {
-    console.log("Google Tag Manager is found on this page.");
-    // Additional logic for __ctm can be executed here directly
-    if (window.__ctm && window.__ctm.config) {
-      console.log(
-        "__ctm.config:",
-        JSON.stringify(window.__ctm.config, null, 2)
-      );
-    }
-  } else {
-    console.log("Google Tag Manager is not found on this page.");
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.action === "sendMessageToIframe") {
+    sendMessageToIframe();
+    sendResponse({ status: "Message received by content script" });
   }
 });
+
+function sendMessageToIframe() {
+  const iframe = document.querySelector("iframe");
+  if (iframe) {
+    iframe.contentWindow.postMessage(
+      "requestData",
+      "https://expected-origin.com"
+    );
+    console.log("Request data sent to iframe.");
+  } else {
+    console.log("No iframe found to send a message to.");
+  }
+}

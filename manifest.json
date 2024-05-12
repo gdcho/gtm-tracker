@@ -3,10 +3,7 @@
   "name": "GTM Checker",
   "version": "1.0",
   "description": "Check for Google Tag Manager on the current page.",
-  "permissions": ["activeTab", "scripting"],
-  "background": {
-    "service_worker": "background.js"
-  },
+  "permissions": ["activeTab", "scripting", "tabs", "<all_urls>"],
   "action": {
     "default_popup": "index.html",
     "default_icon": {
@@ -22,10 +19,18 @@
   },
   "content_scripts": [
     {
-      "world": "MAIN",
       "matches": ["<all_urls>"],
       "js": ["contentScript.js"],
       "run_at": "document_end"
     }
-  ]
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  }
 }

@@ -1,24 +1,22 @@
-document
-  .getElementById("checkGtmButton")
-  .addEventListener("click", function () {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.scripting.executeScript({
-        target: { tabId: tabs[0].id },
-        function: checkForGTM,
-      });
-    });
+document.getElementById("sendMsgButton").addEventListener("click", function () {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    if (tabs.length > 0 && tabs[0].id) {
+      chrome.tabs.sendMessage(
+        tabs[0].id,
+        { action: "sendMessageToIframe" },
+        function (response) {
+          if (chrome.runtime.lastError) {
+            console.log(
+              "Error sending message:",
+              chrome.runtime.lastError.message
+            );
+          } else {
+            console.log("Message sent successfully.");
+          }
+        }
+      );
+    } else {
+      console.log("No active tab found.");
+    }
   });
-
-function checkForGTM() {
-  const hasGTM = !!document.querySelector(
-    'script[src*="googletagmanager.com"]'
-  );
-  console.log(
-    `Google Tag Manager is ${hasGTM ? "" : "not "}found on this page.`
-  );
-  if (hasGTM) {
-    console.log("__ctm.config:", JSON.stringify(window.__ctm.config, null, 2));
-  } else {
-    console.log("error");
-  }
-}
+});
