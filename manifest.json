@@ -1,36 +1,21 @@
 {
   "manifest_version": 3,
-  "name": "GTM Checker",
+  "name": "CTM Logger",
   "version": "1.0",
-  "description": "Check for Google Tag Manager on the current page.",
-  "permissions": ["activeTab", "scripting", "tabs", "<all_urls>"],
+  "description": "Finds GTM CTM tags and logs them",
+  "permissions": ["activeTab", "scripting"],
   "action": {
-    "default_popup": "index.html",
+    "default_popup": "popup.html",
     "default_icon": {
       "16": "icon.png",
       "48": "icon.png",
       "128": "icon.png"
     }
   },
-  "icons": {
-    "16": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["contentScript.js"],
-      "run_at": "document_end"
-    }
-  ],
   "web_accessible_resources": [
     {
-      "resources": ["inject.js"],
+      "resources": ["injectedScript.js"],
       "matches": ["<all_urls>"]
     }
-  ],
-  "externally_connectable": {
-    "matches": ["<all_urls>"]
-  }
+  ]
 }
