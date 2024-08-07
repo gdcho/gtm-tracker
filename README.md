@@ -5,7 +5,7 @@ This is a simple logger for Google CTM that logs to the console.
 1. Clone the repository
 
 ```sh
-   git clone https://github.com/gdcho/notion-lib
+   git clone https://github.com/gdcho/gtm-tracker
 ```
 
 2. Load the extension in Chrome by going to `chrome://extensions/` and clicking on `Load unpacked` and selecting the entire folder
